@@ -136,9 +136,9 @@ export const MentionsRadar: React.FC<MentionsRadarProps> = ({
   const filteredMentions = useMemo(() => {
     if (!mentions) return [];
     return mentions.filter((m) => {
-      if (filters.tipoMencao === 'fp') return m.menciona_fabio;
-      if (filters.tipoMencao === 'acn') return m.menciona_antonio;
-      if (filters.tipoMencao === 'reitoria') return m.menciona_reitoria;
+      if (filters.tipoMencao === 'cm') return m.menciona_fabio || m.menciona_carlos;
+      if (filters.tipoMencao === 'ar') return m.menciona_antonio || m.menciona_ana;
+      if (filters.tipoMencao === 'diretoria') return m.menciona_reitoria || m.menciona_diretoria;
       return true;
     });
   }, [mentions, filters.tipoMencao]);
@@ -149,47 +149,47 @@ export const MentionsRadar: React.FC<MentionsRadarProps> = ({
     const grouped = filteredMentions.reduce((acc, m) => {
       const date = m.data_publicacao?.split('T')[0] || 'unknown';
       if (!acc[date]) {
-        acc[date] = { date, fp: 0, acn: 0, reitoria: 0 };
+        acc[date] = { date, cm: 0, ar: 0, diretoria: 0 };
       }
-      if (m.menciona_fabio) acc[date].fp++;
-      if (m.menciona_antonio) acc[date].acn++;
-      if (m.menciona_reitoria) acc[date].reitoria++;
+      if (m.menciona_fabio || m.menciona_carlos) acc[date].cm++;
+      if (m.menciona_antonio || m.menciona_ana) acc[date].ar++;
+      if (m.menciona_reitoria || m.menciona_diretoria) acc[date].diretoria++;
       return acc;
-    }, {} as Record<string, { date: string; fp: number; acn: number; reitoria: number }>);
+    }, {} as Record<string, { date: string; cm: number; ar: number; diretoria: number }>);
 
     return Object.values(grouped).sort((a, b) => a.date.localeCompare(b.date));
   }, [filteredMentions]);
 
   // Summary counts
   const summary = useMemo(() => {
-    if (!mentions) return { fp: 0, acn: 0, reitoria: 0 };
+    if (!mentions) return { cm: 0, ar: 0, diretoria: 0 };
     return {
-      fp: mentions.filter((m) => m.menciona_fabio).length,
-      acn: mentions.filter((m) => m.menciona_antonio).length,
-      reitoria: mentions.filter((m) => m.menciona_reitoria).length,
+      cm: mentions.filter((m) => m.menciona_fabio || m.menciona_carlos).length,
+      ar: mentions.filter((m) => m.menciona_antonio || m.menciona_ana).length,
+      diretoria: mentions.filter((m) => m.menciona_reitoria || m.menciona_diretoria).length,
     };
   }, [mentions]);
 
   const getMentionBadges = (post: MentionPost) => {
     const badges = [];
-    if (post.menciona_fabio) {
+    if (post.menciona_fabio || (post as any).menciona_carlos) {
       badges.push(
-        <Badge key="fp" className="bg-blue-500/20 text-blue-400 border-blue-500/30">
-          FP
+        <Badge key="cm" className="bg-blue-500/20 text-blue-400 border-blue-500/30">
+          CM
         </Badge>
       );
     }
-    if (post.menciona_antonio) {
+    if (post.menciona_antonio || (post as any).menciona_ana) {
       badges.push(
-        <Badge key="acn" className="bg-red-500/20 text-red-400 border-red-500/30">
-          ACN
+        <Badge key="ar" className="bg-red-500/20 text-red-400 border-red-500/30">
+          AR
         </Badge>
       );
     }
-    if (post.menciona_reitoria) {
+    if (post.menciona_reitoria || (post as any).menciona_diretoria) {
       badges.push(
-        <Badge key="reitoria" className="bg-secondary/20 text-secondary border-secondary/30">
-          Reitoria
+        <Badge key="diretoria" className="bg-secondary/20 text-secondary border-secondary/30">
+          Diretoria
         </Badge>
       );
     }
@@ -225,7 +225,7 @@ export const MentionsRadar: React.FC<MentionsRadarProps> = ({
         <div className="flex items-center gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/50">
           <Hospital className="h-5 w-5 text-amber-500" />
           <span className="text-sm font-medium text-amber-700 dark:text-amber-400">
-            Filtrando: EBSERH/HUAP
+            Filtrando: INSMED/HU
           </span>
           <Button
             variant="ghost"
@@ -253,9 +253,9 @@ export const MentionsRadar: React.FC<MentionsRadarProps> = ({
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="todos">Todas as Menções</SelectItem>
-              <SelectItem value="fp">Fábio Passos</SelectItem>
-              <SelectItem value="acn">Antônio Claudio</SelectItem>
-              <SelectItem value="reitoria">Reitoria</SelectItem>
+              <SelectItem value="cm">Carlos Mendes</SelectItem>
+              <SelectItem value="ar">Ana Ribeiro</SelectItem>
+              <SelectItem value="diretoria">Diretoria</SelectItem>
             </SelectContent>
           </Select>
         )}
@@ -297,15 +297,15 @@ export const MentionsRadar: React.FC<MentionsRadarProps> = ({
         </Select>
       </div>
 
-      {/* Summary Cards - only show when NOT in EBSERH mode */}
+      {/* Summary Cards - only show when NOT in INSMED filter mode */}
       {!ebserhFilter && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <Card className="bg-blue-500/10 border-blue-500/30">
             <CardContent className="pt-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">Fábio Passos</p>
-                  <p className="text-2xl font-bold text-blue-400">{summary.fp}</p>
+                  <p className="text-sm text-muted-foreground">Carlos Mendes</p>
+                  <p className="text-2xl font-bold text-blue-400">{summary.cm}</p>
                 </div>
                 <AtSign className="h-8 w-8 text-blue-400/50" />
               </div>
@@ -315,8 +315,8 @@ export const MentionsRadar: React.FC<MentionsRadarProps> = ({
             <CardContent className="pt-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">Antônio Claudio</p>
-                  <p className="text-2xl font-bold text-red-400">{summary.acn}</p>
+                  <p className="text-sm text-muted-foreground">Ana Ribeiro</p>
+                  <p className="text-2xl font-bold text-red-400">{summary.ar}</p>
                 </div>
                 <AtSign className="h-8 w-8 text-red-400/50" />
               </div>
@@ -326,8 +326,8 @@ export const MentionsRadar: React.FC<MentionsRadarProps> = ({
             <CardContent className="pt-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">Reitoria</p>
-                  <p className="text-2xl font-bold text-secondary">{summary.reitoria}</p>
+                  <p className="text-sm text-muted-foreground">Diretoria</p>
+                  <p className="text-2xl font-bold text-secondary">{summary.diretoria}</p>
                 </div>
                 <AtSign className="h-8 w-8 text-secondary/50" />
               </div>
@@ -336,13 +336,13 @@ export const MentionsRadar: React.FC<MentionsRadarProps> = ({
         </div>
       )}
 
-      {/* EBSERH Summary Card when in EBSERH mode */}
+      {/* INSMED/HU Summary Card when in priority filter mode */}
       {ebserhFilter && (
         <Card className="bg-amber-500/10 border-amber-500/30">
           <CardContent className="pt-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Menções EBSERH/HUAP</p>
+                <p className="text-sm text-muted-foreground">Menções INSMED/HU</p>
                 <p className="text-2xl font-bold text-amber-500">{activeCount}</p>
               </div>
               <Hospital className="h-8 w-8 text-amber-500/50" />
@@ -378,9 +378,9 @@ export const MentionsRadar: React.FC<MentionsRadarProps> = ({
                     labelFormatter={(value) => format(parseISO(value as string), "dd 'de' MMMM", { locale: ptBR })}
                   />
                   <Legend />
-                  <Line type="monotone" dataKey="fp" name="Fábio Passos" stroke="#3b82f6" strokeWidth={2} dot={false} />
-                  <Line type="monotone" dataKey="acn" name="Antônio Claudio" stroke="#ef4444" strokeWidth={2} dot={false} />
-                  <Line type="monotone" dataKey="reitoria" name="Reitoria" stroke="hsl(var(--secondary))" strokeWidth={2} dot={false} />
+                  <Line type="monotone" dataKey="cm" name="Carlos Mendes" stroke="#3b82f6" strokeWidth={2} dot={false} />
+                  <Line type="monotone" dataKey="ar" name="Ana Ribeiro" stroke="#ef4444" strokeWidth={2} dot={false} />
+                  <Line type="monotone" dataKey="diretoria" name="Diretoria" stroke="hsl(var(--secondary))" strokeWidth={2} dot={false} />
                 </LineChart>
               </ResponsiveContainer>
             </div>
@@ -393,7 +393,7 @@ export const MentionsRadar: React.FC<MentionsRadarProps> = ({
         <CardHeader>
           <CardTitle className="text-lg flex items-center gap-2">
             {ebserhFilter && <Hospital className="h-5 w-5 text-amber-500" />}
-            {ebserhFilter ? 'Menções EBSERH/HUAP' : 'Posts com Menções'} ({activeCount})
+            {ebserhFilter ? 'Menções INSMED/HU' : 'Posts com Menções'} ({activeCount})
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -429,7 +429,7 @@ export const MentionsRadar: React.FC<MentionsRadarProps> = ({
                         </span>
                         {ebserhFilter ? (
                           <Badge className="bg-amber-500/20 text-amber-500 border-amber-500/30">
-                            EBSERH
+                            INSMED/HU
                           </Badge>
                         ) : (
                           getMentionBadges(post)

@@ -47,8 +47,8 @@ export const CommentersDigest: React.FC = () => {
   // Get latest week renewal rates
   const latestWeek = renewal?.[0]?.semana;
   const currentRenewal = renewal?.filter(r => r.semana === latestWeek) || [];
-  const fpRenewal = currentRenewal.find(r => r.perfil?.toLowerCase().includes('fabio'));
-  const rsRenewal = currentRenewal.filter(r => !r.perfil?.toLowerCase().includes('fabio'));
+  const fpRenewal = currentRenewal.find(r => r.perfil?.toLowerCase().includes('carlos'));
+  const rsRenewal = currentRenewal.filter(r => !r.perfil?.toLowerCase().includes('carlos'));
   const avgRsRenewal = rsRenewal.length > 0 
     ? Math.round(rsRenewal.reduce((sum, r) => sum + (r.taxa_renovacao_pct || 0), 0) / rsRenewal.length)
     : 0;
@@ -106,7 +106,7 @@ export const CommentersDigest: React.FC = () => {
             <div className="text-xs text-muted-foreground">Novos esta semana</div>
           </div>
 
-          {/* Renovação FP */}
+          {/* Renovação CM */}
           <div className="bg-blue-500/10 rounded-lg p-3 text-center">
             <div className="flex items-center justify-center gap-1 text-blue-400 mb-1">
               <RefreshCw className="h-4 w-4" />
@@ -114,10 +114,10 @@ export const CommentersDigest: React.FC = () => {
             <div className="text-2xl font-bold text-blue-400">
               {Math.round(fpRenewal?.taxa_renovacao_pct || 0)}%
             </div>
-            <div className="text-xs text-muted-foreground">Renovação FP</div>
+            <div className="text-xs text-muted-foreground">Renovação CM</div>
           </div>
 
-          {/* Renovação RS */}
+          {/* Renovação LF */}
           <div className="bg-red-500/10 rounded-lg p-3 text-center">
             <div className="flex items-center justify-center gap-1 text-red-400 mb-1">
               <RefreshCw className="h-4 w-4" />
@@ -125,7 +125,7 @@ export const CommentersDigest: React.FC = () => {
             <div className="text-2xl font-bold text-red-400">
               {avgRsRenewal}%
             </div>
-            <div className="text-xs text-muted-foreground">Renovação RS</div>
+            <div className="text-xs text-muted-foreground">Renovação LF</div>
           </div>
         </div>
 

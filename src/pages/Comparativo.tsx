@@ -49,13 +49,11 @@ const Comparativo = () => {
   useEffect(() => {
     if (profiles.length > 0 && !state.profileAId && !state.profileBId) {
       const fabioFB = profiles.find(
-        p => p.nome.toLowerCase().includes('fábio') && p.plataforma === 'facebook'
-      ) || profiles.find(
-        p => p.nome.toLowerCase().includes('fabio') && p.plataforma === 'facebook'
+        p => p.nome.toLowerCase().includes('carlos') && p.plataforma === 'facebook'
       );
-      
+
       const robertoFB = profiles.find(
-        p => p.nome.toLowerCase().includes('roberto') && p.plataforma === 'facebook'
+        p => p.nome.toLowerCase().includes('lucas') && p.plataforma === 'facebook'
       );
 
       setState(prev => ({

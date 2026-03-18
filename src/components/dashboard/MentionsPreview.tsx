@@ -25,14 +25,14 @@ export const MentionsPreview: React.FC = () => {
   });
 
   const getMentionBadge = (mention: MentionPreview) => {
-    if (mention.menciona_fabio) {
-      return <Badge className="bg-blue-500/20 text-blue-400 border-none text-xs">FP</Badge>;
+    if (mention.menciona_fabio || mention.menciona_carlos) {
+      return <Badge className="bg-blue-500/20 text-blue-400 border-none text-xs">CM</Badge>;
     }
-    if (mention.menciona_antonio) {
-      return <Badge className="bg-red-500/20 text-red-400 border-none text-xs">ACN</Badge>;
+    if (mention.menciona_antonio || mention.menciona_ana) {
+      return <Badge className="bg-red-500/20 text-red-400 border-none text-xs">AR</Badge>;
     }
-    if (mention.menciona_reitoria) {
-      return <Badge className="bg-secondary/20 text-secondary border-none text-xs">Reitoria</Badge>;
+    if (mention.menciona_reitoria || mention.menciona_diretoria) {
+      return <Badge className="bg-secondary/20 text-secondary border-none text-xs">Diretoria</Badge>;
     }
     return null;
   };
@@ -92,7 +92,7 @@ export const MentionsPreview: React.FC = () => {
           <div className="flex items-center justify-between">
             <CardTitle className="text-lg font-semibold flex items-center gap-2">
               <AtSign className="h-5 w-5 text-secondary" />
-              Últimas Menções à Reitoria
+              Últimas Menções Monitoradas
             </CardTitle>
           </div>
         </CardHeader>
@@ -111,7 +111,7 @@ export const MentionsPreview: React.FC = () => {
         <div className="flex items-center justify-between">
           <CardTitle className="text-lg font-semibold flex items-center gap-2">
             <AtSign className="h-5 w-5 text-secondary" />
-            Últimas Menções à Reitoria
+            Últimas Menções Monitoradas
           </CardTitle>
           <Link 
             to="/inteligencia" 

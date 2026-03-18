@@ -14,28 +14,31 @@ export const PrintableReport: React.FC<PrintableReportProps> = ({ config, data }
 
   const generateConclusions = (): string[] => {
     const conclusions: string[] = [];
-    
+
     if (data.comparativo.fabio && data.comparativo.roberto) {
-      const { fabio, roberto } = data.comparativo;
-      
-      if (fabio.seguidores > roberto.seguidores) {
-        const diff = ((fabio.seguidores - roberto.seguidores) / roberto.seguidores * 100).toFixed(1);
-        conclusions.push(`Fábio Passos tem ${diff}% mais seguidores que Roberto Sales.`);
-      } else if (roberto.seguidores > fabio.seguidores) {
-        const diff = ((roberto.seguidores - fabio.seguidores) / fabio.seguidores * 100).toFixed(1);
-        conclusions.push(`Roberto Sales tem ${diff}% mais seguidores que Fábio Passos.`);
-      }
-      
-      if (fabio.taxaEngajamento > roberto.taxaEngajamento) {
-        conclusions.push(`Fábio Passos apresenta taxa de engajamento superior (${formatPercent(fabio.taxaEngajamento)} vs ${formatPercent(roberto.taxaEngajamento)}).`);
-      } else if (roberto.taxaEngajamento > fabio.taxaEngajamento) {
-        conclusions.push(`Roberto Sales apresenta taxa de engajamento superior (${formatPercent(roberto.taxaEngajamento)} vs ${formatPercent(fabio.taxaEngajamento)}).`);
+      const perfilA = data.comparativo.fabio;
+      const perfilB = data.comparativo.roberto;
+      const nomeA = perfilA.nome || 'Perfil A';
+      const nomeB = perfilB.nome || 'Perfil B';
+
+      if (perfilA.seguidores > perfilB.seguidores) {
+        const diff = ((perfilA.seguidores - perfilB.seguidores) / perfilB.seguidores * 100).toFixed(1);
+        conclusions.push(`${nomeA} tem ${diff}% mais seguidores que ${nomeB}.`);
+      } else if (perfilB.seguidores > perfilA.seguidores) {
+        const diff = ((perfilB.seguidores - perfilA.seguidores) / perfilA.seguidores * 100).toFixed(1);
+        conclusions.push(`${nomeB} tem ${diff}% mais seguidores que ${nomeA}.`);
       }
 
-      if (fabio.totalPosts > roberto.totalPosts) {
-        conclusions.push(`Fábio Passos publicou mais conteúdo no período (${fabio.totalPosts} posts vs ${roberto.totalPosts}).`);
-      } else if (roberto.totalPosts > fabio.totalPosts) {
-        conclusions.push(`Roberto Sales publicou mais conteúdo no período (${roberto.totalPosts} posts vs ${fabio.totalPosts}).`);
+      if (perfilA.taxaEngajamento > perfilB.taxaEngajamento) {
+        conclusions.push(`${nomeA} apresenta taxa de engajamento superior (${formatPercent(perfilA.taxaEngajamento)} vs ${formatPercent(perfilB.taxaEngajamento)}).`);
+      } else if (perfilB.taxaEngajamento > perfilA.taxaEngajamento) {
+        conclusions.push(`${nomeB} apresenta taxa de engajamento superior (${formatPercent(perfilB.taxaEngajamento)} vs ${formatPercent(perfilA.taxaEngajamento)}).`);
+      }
+
+      if (perfilA.totalPosts > perfilB.totalPosts) {
+        conclusions.push(`${nomeA} publicou mais conteúdo no período (${perfilA.totalPosts} posts vs ${perfilB.totalPosts}).`);
+      } else if (perfilB.totalPosts > perfilA.totalPosts) {
+        conclusions.push(`${nomeB} publicou mais conteúdo no período (${perfilB.totalPosts} posts vs ${perfilA.totalPosts}).`);
       }
     }
     
@@ -59,10 +62,10 @@ export const PrintableReport: React.FC<PrintableReportProps> = ({ config, data }
       <header className="border-b-2 border-[#00285F] pb-4">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-[#00285F] rounded flex items-center justify-center">
-            <span className="text-white font-bold text-lg">FP</span>
+            <span className="text-white font-bold text-sm">OA</span>
           </div>
           <div>
-            <h1 className="text-xl font-bold text-[#00285F]">FP OBSERVA</h1>
+            <h1 className="text-xl font-bold text-[#00285F]">ObservaApp</h1>
             <p className="text-xs text-gray-500">Sistema de Monitoramento</p>
           </div>
         </div>
@@ -107,14 +110,16 @@ export const PrintableReport: React.FC<PrintableReportProps> = ({ config, data }
         {/* Comparativo Rápido */}
         {data.comparativo.fabio && data.comparativo.roberto && (
           <div className="mt-5">
-            <h4 className="font-semibold mb-3 text-gray-800">Comparativo: Fábio Passos vs Roberto Sales</h4>
+            <h4 className="font-semibold mb-3 text-gray-800">
+              Comparativo: {data.comparativo.fabio.nome} vs {data.comparativo.roberto.nome}
+            </h4>
             <div className="overflow-x-auto">
               <table className="w-full border-collapse text-sm">
                 <thead>
                   <tr className="bg-[#00285F]">
                     <th className="p-2 text-left text-white font-medium">Métrica</th>
-                    <th className="p-2 text-right text-white font-medium">Fábio Passos</th>
-                    <th className="p-2 text-right text-white font-medium">Roberto Sales</th>
+                    <th className="p-2 text-right text-white font-medium">{data.comparativo.fabio.nome}</th>
+                    <th className="p-2 text-right text-white font-medium">{data.comparativo.roberto.nome}</th>
                     <th className="p-2 text-center text-white font-medium">Vencedor</th>
                   </tr>
                 </thead>
@@ -124,8 +129,8 @@ export const PrintableReport: React.FC<PrintableReportProps> = ({ config, data }
                     <td className="p-2 text-right font-medium text-gray-900">{formatNumber(data.comparativo.fabio.seguidores)}</td>
                     <td className="p-2 text-right font-medium text-gray-900">{formatNumber(data.comparativo.roberto.seguidores)}</td>
                     <td className="p-2 text-center">
-                      {data.comparativo.fabio.seguidores > data.comparativo.roberto.seguidores ? '🏆 FP' : 
-                       data.comparativo.fabio.seguidores < data.comparativo.roberto.seguidores ? '🏆 RS' : '—'}
+                      {data.comparativo.fabio.seguidores > data.comparativo.roberto.seguidores ? `🏆 ${data.comparativo.fabio.nome}` :
+                       data.comparativo.fabio.seguidores < data.comparativo.roberto.seguidores ? `🏆 ${data.comparativo.roberto.nome}` : '—'}
                     </td>
                   </tr>
                   <tr className="border-b border-gray-200 bg-gray-50">
@@ -133,8 +138,8 @@ export const PrintableReport: React.FC<PrintableReportProps> = ({ config, data }
                     <td className="p-2 text-right font-medium text-gray-900">{formatNumber(data.comparativo.fabio.totalPosts)}</td>
                     <td className="p-2 text-right font-medium text-gray-900">{formatNumber(data.comparativo.roberto.totalPosts)}</td>
                     <td className="p-2 text-center">
-                      {data.comparativo.fabio.totalPosts > data.comparativo.roberto.totalPosts ? '🏆 FP' : 
-                       data.comparativo.fabio.totalPosts < data.comparativo.roberto.totalPosts ? '🏆 RS' : '—'}
+                      {data.comparativo.fabio.totalPosts > data.comparativo.roberto.totalPosts ? `🏆 ${data.comparativo.fabio.nome}` :
+                       data.comparativo.fabio.totalPosts < data.comparativo.roberto.totalPosts ? `🏆 ${data.comparativo.roberto.nome}` : '—'}
                     </td>
                   </tr>
                   <tr className="border-b border-gray-200">
@@ -142,8 +147,8 @@ export const PrintableReport: React.FC<PrintableReportProps> = ({ config, data }
                     <td className="p-2 text-right font-medium text-gray-900">{formatNumber(data.comparativo.fabio.engajamento)}</td>
                     <td className="p-2 text-right font-medium text-gray-900">{formatNumber(data.comparativo.roberto.engajamento)}</td>
                     <td className="p-2 text-center">
-                      {data.comparativo.fabio.engajamento > data.comparativo.roberto.engajamento ? '🏆 FP' : 
-                       data.comparativo.fabio.engajamento < data.comparativo.roberto.engajamento ? '🏆 RS' : '—'}
+                      {data.comparativo.fabio.engajamento > data.comparativo.roberto.engajamento ? `🏆 ${data.comparativo.fabio.nome}` :
+                       data.comparativo.fabio.engajamento < data.comparativo.roberto.engajamento ? `🏆 ${data.comparativo.roberto.nome}` : '—'}
                     </td>
                   </tr>
                   <tr className="border-b border-gray-200 bg-gray-50">
@@ -151,8 +156,8 @@ export const PrintableReport: React.FC<PrintableReportProps> = ({ config, data }
                     <td className="p-2 text-right font-medium text-gray-900">{formatPercent(data.comparativo.fabio.taxaEngajamento)}</td>
                     <td className="p-2 text-right font-medium text-gray-900">{formatPercent(data.comparativo.roberto.taxaEngajamento)}</td>
                     <td className="p-2 text-center">
-                      {data.comparativo.fabio.taxaEngajamento > data.comparativo.roberto.taxaEngajamento ? '🏆 FP' : 
-                       data.comparativo.fabio.taxaEngajamento < data.comparativo.roberto.taxaEngajamento ? '🏆 RS' : '—'}
+                      {data.comparativo.fabio.taxaEngajamento > data.comparativo.roberto.taxaEngajamento ? `🏆 ${data.comparativo.fabio.nome}` :
+                       data.comparativo.fabio.taxaEngajamento < data.comparativo.roberto.taxaEngajamento ? `🏆 ${data.comparativo.roberto.nome}` : '—'}
                     </td>
                   </tr>
                 </tbody>
@@ -286,7 +291,7 @@ export const PrintableReport: React.FC<PrintableReportProps> = ({ config, data }
       <footer className="border-t-2 border-[#00285F] pt-4 mt-6">
         <div className="flex justify-between items-center text-xs text-gray-500">
           <div>
-            <p className="font-medium text-[#00285F]">FP OBSERVA</p>
+            <p className="font-medium text-[#00285F]">ObservaApp</p>
             <p>Sistema de Monitoramento de Redes Sociais</p>
           </div>
           <div className="text-right">

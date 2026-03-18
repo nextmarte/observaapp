@@ -1,6 +1,6 @@
 // Types for the Intelligence page (/inteligencia)
 
-// Menções da view fpobserva_vw_mencoes_reitoria
+// Menções monitoradas
 export interface MentionPost {
   id: string;
   perfil_id: string | null;
@@ -16,6 +16,10 @@ export interface MentionPost {
   comentarios: number | null;
   compartilhamentos: number | null;
   sentimento: string | null;
+  menciona_carlos: boolean | null;
+  menciona_ana: boolean | null;
+  menciona_diretoria: boolean | null;
+  // legacy aliases maintained for backward compat
   menciona_fabio: boolean | null;
   menciona_antonio: boolean | null;
   menciona_reitoria: boolean | null;
@@ -78,7 +82,7 @@ export interface RenewalData {
 export interface MentionsFiltersState {
   dataInicio: Date | null;
   dataFim: Date | null;
-  tipoMencao: 'todos' | 'fp' | 'acn' | 'reitoria';
+  tipoMencao: 'todos' | 'cm' | 'ar' | 'diretoria';
   perfilOrigem: string | null;
   sentimento: string | null;
 }
@@ -96,7 +100,7 @@ export interface CommentersFiltersState {
   plataforma: string | null;
 }
 
-// Menção EBSERH da view fpobserva_vw_mencoes_ebserh
+// Menção INSMED/HU (tema prioritário)
 export interface EbserhMention {
   id: string | null;
   perfil_id: string | null;
@@ -116,7 +120,7 @@ export interface EbserhMention {
   notas_campanha: string | null;
 }
 
-// Resumo EBSERH para o card monitor
+// Resumo INSMED/HU para o card monitor
 export interface EbserhSummary {
   totalMencoes: number;
   sentimentoPredominante: string;
@@ -134,6 +138,8 @@ export interface EbserhSummary {
 
 // Summary card data
 export interface IntelligenceSummary {
+  mencoesDiretoria: number;
+  // legacy alias
   mencoesReitoria: number;
   problemasIdentificados: number;
   demandasPendentes: number;

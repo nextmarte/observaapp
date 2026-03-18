@@ -139,8 +139,8 @@ export const EbserhMonitorCard: React.FC<EbserhMonitorCardProps> = ({ onViewDeta
               <Hospital className="h-6 w-6 text-gray-500" />
             </div>
             <div>
-              <h2 className="text-lg font-semibold text-muted-foreground">Monitor EBSERH/HUAP</h2>
-              <p className="text-sm text-muted-foreground">Nenhuma menção nos últimos 30 dias</p>
+              <h2 className="text-lg font-semibold text-muted-foreground">Monitor INSMED/HU</h2>
+              <p className="text-sm text-muted-foreground">Nenhuma menção ao INSMED/HU nos últimos 30 dias</p>
             </div>
           </div>
         </CardContent>
@@ -159,7 +159,7 @@ export const EbserhMonitorCard: React.FC<EbserhMonitorCardProps> = ({ onViewDeta
             </div>
             <div>
               <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
-                Monitor EBSERH/HUAP
+                Monitor INSMED/HU
                 <AlertTriangle className="h-4 w-4 text-amber-500" />
               </h2>
               <p className="text-xs text-muted-foreground">Últimos 30 dias</p>

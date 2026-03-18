@@ -5,7 +5,7 @@ import {
   type DehydratedState,
 } from '@tanstack/react-query';
 
-const QUERY_CACHE_KEY = 'fpobserva:query-cache:v1';
+const QUERY_CACHE_KEY = 'observaapp:query-cache:v1';
 const QUERY_CACHE_TTL_MS = 30 * 60 * 1000;
 
 interface PersistedQueryCache {

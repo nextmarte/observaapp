@@ -4,7 +4,7 @@ import { Lightbulb } from 'lucide-react';
 export const AlertTips = () => {
   const tips = [
     'Monitore quando o adversário tiver post com engajamento > 150',
-    'Alerte se Fábio Passos ficar 5 dias sem postar',
+    'Alerte se Carlos Mendes ficar 5 dias sem postar',
     'Acompanhe variações de seguidores > 3%',
     'Configure alertas para posts com mais de 50 comentários',
     'Monitore quedas bruscas na taxa de engajamento',

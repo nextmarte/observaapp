@@ -94,13 +94,17 @@ export interface CommentersRenewal {
   taxa_renovacao_pct: number | null;
 }
 
-// Menção reitoria para preview
+// Menção monitorada para preview
 export interface MentionPreview {
   id: string | null;
   perfil_nome: string | null;
   data_publicacao: string | null;
   conteudo_texto: string | null;
   sentimento: string | null;
+  menciona_carlos: boolean | null;
+  menciona_ana: boolean | null;
+  menciona_diretoria: boolean | null;
+  // legacy aliases (dados mockados mantêm ambos)
   menciona_fabio: boolean | null;
   menciona_antonio: boolean | null;
   menciona_reitoria: boolean | null;
