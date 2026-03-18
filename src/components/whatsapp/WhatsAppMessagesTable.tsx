@@ -1,10 +1,13 @@
 import React, { useState, useMemo } from 'react';
 import { format, parseISO } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Phone, Calendar, Tag, Smile } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import {
+  Dialog, DialogContent, DialogHeader, DialogTitle,
+} from '@/components/ui/dialog';
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from '@/components/ui/select';
@@ -61,6 +64,7 @@ export const WhatsAppMessagesTable: React.FC<WhatsAppMessagesTableProps> = ({ me
     status: 'all',
   });
   const [page, setPage] = useState(1);
+  const [selected, setSelected] = useState<WhatsAppMensagem | null>(null);
 
   const filtered = useMemo(() => {
     return mensagens.filter((m) => {
@@ -157,7 +161,11 @@ export const WhatsAppMessagesTable: React.FC<WhatsAppMessagesTableProps> = ({ me
                 </TableRow>
               ) : (
                 paged.map((m) => (
-                  <TableRow key={m.id} className="border-border hover:bg-muted/40">
+                  <TableRow
+                    key={m.id}
+                    className="border-border hover:bg-muted/40 cursor-pointer"
+                    onClick={() => setSelected(m)}
+                  >
                     <TableCell>
                       <div>
                         <p className="font-medium text-foreground text-sm">{m.remetente_nome}</p>
@@ -222,5 +230,62 @@ export const WhatsAppMessagesTable: React.FC<WhatsAppMessagesTableProps> = ({ me
         )}
       </CardContent>
     </Card>
+
+    {/* Message detail modal */}
+    <Dialog open={!!selected} onOpenChange={(open) => { if (!open) setSelected(null); }}>
+      <DialogContent className="max-w-lg">
+        {selected && (
+          <>
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                <span>{selected.remetente_nome}</span>
+                <Badge variant="outline" className={CATEGORIA_STYLE[selected.categoria]}>
+                  {CATEGORIA_LABEL[selected.categoria]}
+                </Badge>
+              </DialogTitle>
+            </DialogHeader>
+
+            <div className="space-y-4">
+              {/* Meta */}
+              <div className="grid grid-cols-2 gap-3 text-sm">
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <Phone className="h-4 w-4 shrink-0" />
+                  <span>{selected.remetente_telefone}</span>
+                </div>
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <Calendar className="h-4 w-4 shrink-0" />
+                  <span>
+                    {format(parseISO(selected.data_recebimento), "dd/MM/yyyy HH:mm", { locale: ptBR })}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <Tag className="h-4 w-4 shrink-0" />
+                  <span>{TEMA_LABEL[selected.tema]}</span>
+                </div>
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <Smile className="h-4 w-4 shrink-0" />
+                  <Badge variant="outline" className={SENTIMENTO_STYLE[selected.sentimento]}>
+                    {selected.sentimento}
+                  </Badge>
+                </div>
+              </div>
+
+              {/* Status */}
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-muted-foreground">Status:</span>
+                <Badge variant="outline" className={STATUS_STYLE[selected.status]}>
+                  {STATUS_LABEL[selected.status]}
+                </Badge>
+              </div>
+
+              {/* Message body */}
+              <div className="rounded-lg border border-border bg-muted/30 p-4">
+                <p className="text-sm text-foreground leading-relaxed">{selected.mensagem}</p>
+              </div>
+            </div>
+          </>
+        )}
+      </DialogContent>
+    </Dialog>
   );
 };
