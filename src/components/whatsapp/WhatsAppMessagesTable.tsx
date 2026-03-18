@@ -95,6 +95,7 @@ export const WhatsAppMessagesTable: React.FC<WhatsAppMessagesTableProps> = ({ me
   }
 
   return (
+    <>
     <Card className="bg-card border-border">
       <CardHeader>
         <div className="flex flex-wrap items-center justify-between gap-4">
@@ -232,6 +233,7 @@ export const WhatsAppMessagesTable: React.FC<WhatsAppMessagesTableProps> = ({ me
     </Card>
 
     {/* Message detail modal */}
+
     <Dialog open={!!selected} onOpenChange={(open) => { if (!open) setSelected(null); }}>
       <DialogContent className="max-w-lg">
         {selected && (
@@ -287,5 +289,6 @@ export const WhatsAppMessagesTable: React.FC<WhatsAppMessagesTableProps> = ({ me
         )}
       </DialogContent>
     </Dialog>
+    </>
   );
 };
