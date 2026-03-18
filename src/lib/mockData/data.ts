@@ -505,48 +505,70 @@ const waRemetentes = [
   { nome: 'Manoel T.', telefone: '+55 (86) 9****-1235' },
 ];
 
-const waMensagens = [
-  'Bom dia! Quando vão resolver o buraco na Rua das Flores? Já faz meses que tá assim.',
-  'Parabéns pelo trabalho que vocês estão fazendo pelo nosso bairro!',
-  'Preciso de informação sobre o posto de saúde. Quando vai ter médico de família?',
-  'A creche do bairro tá com problema sério, falta professor toda semana.',
-  'Gostaria de saber quando vai ter audiência pública sobre o novo projeto de lei.',
-  'O asfalto da avenida principal ficou ótimo, obrigado pela atenção!',
-  'Minha rua ainda não tem iluminação pública. Isso é um absurdo!',
-  'Queria agradecer pela reforma da praça, ficou muito bonita.',
-  'Tem como agendar uma reunião para falar sobre o projeto do parque?',
-  'A água tá faltando há três dias no conjunto habitacional. Urgente!',
-  'Precisamos de mais segurança no entorno da escola municipal.',
-  'O ônibus da linha 23 parou de passar. Isso tá afetando muito trabalhador.',
-  'Vocês sabem quando abre o cadastro para o programa de habitação?',
-  'O médico do posto de saúde atendeu muito bem minha mãe, parabéns!',
-  'Tem muita dengue no bairro e não vejo fumacê passando.',
+// Each entry keeps mensagem, categoria, tema and sentimento coherent
+const waTemplates = [
+  // demandas
+  { mensagem: 'Bom dia! Quando vão resolver o buraco na Rua das Flores? Já faz meses que tá assim.', categoria: 'demanda', tema: 'infraestrutura', sentimento: 'negativo' },
+  { mensagem: 'Minha rua ainda não tem iluminação pública. Isso precisa ser resolvido urgente!', categoria: 'demanda', tema: 'infraestrutura', sentimento: 'negativo' },
+  { mensagem: 'A água tá faltando há três dias no conjunto habitacional. Urgente!', categoria: 'demanda', tema: 'infraestrutura', sentimento: 'negativo' },
+  { mensagem: 'O ônibus da linha 23 parou de passar. Isso tá afetando muito trabalhador.', categoria: 'demanda', tema: 'infraestrutura', sentimento: 'negativo' },
+  { mensagem: 'Precisamos de mais segurança no entorno da escola municipal.', categoria: 'demanda', tema: 'seguranca', sentimento: 'neutro' },
+  { mensagem: 'A creche do bairro tá com problema sério, falta professor toda semana.', categoria: 'demanda', tema: 'educacao', sentimento: 'negativo' },
+  { mensagem: 'Tem muita dengue no bairro e não vejo fumacê passando.', categoria: 'demanda', tema: 'saude', sentimento: 'negativo' },
+  { mensagem: 'Vocês sabem quando abre o cadastro para o programa de habitação?', categoria: 'demanda', tema: 'institucional', sentimento: 'neutro' },
+  { mensagem: 'O calçadão do centro precisa de reforma, está cheio de buracos e perigoso.', categoria: 'demanda', tema: 'infraestrutura', sentimento: 'negativo' },
+  { mensagem: 'Quando vai ter médico especialista no posto do bairro? A fila tá enorme.', categoria: 'demanda', tema: 'saude', sentimento: 'negativo' },
+  { mensagem: 'A escola pública do bairro está sem diretor há dois meses. Cadê a solução?', categoria: 'demanda', tema: 'educacao', sentimento: 'negativo' },
+  { mensagem: 'Precisamos de uma UPA mais perto daqui, o hospital fica muito longe.', categoria: 'demanda', tema: 'saude', sentimento: 'neutro' },
+  { mensagem: 'Os semáforos da avenida principal estão quebrados há semanas.', categoria: 'demanda', tema: 'infraestrutura', sentimento: 'negativo' },
+  { mensagem: 'Quando vai ter pavimentação na rua de trás? Só barro na chuva.', categoria: 'demanda', tema: 'infraestrutura', sentimento: 'negativo' },
+  { mensagem: 'Falta merenda na escola do meu filho já faz duas semanas.', categoria: 'demanda', tema: 'educacao', sentimento: 'negativo' },
+  // criticas
+  { mensagem: 'Essa situação do transporte público é um descaso total com a população!', categoria: 'critica', tema: 'infraestrutura', sentimento: 'negativo' },
+  { mensagem: 'Prometeram asfaltar nossa rua há um ano e nada foi feito até agora.', categoria: 'critica', tema: 'infraestrutura', sentimento: 'negativo' },
+  { mensagem: 'O atendimento no posto de saúde está péssimo, fila enorme e sem resolutividade.', categoria: 'critica', tema: 'saude', sentimento: 'negativo' },
+  { mensagem: 'As obras do parque pararam e deixaram tudo um caos. Quando retomam?', categoria: 'critica', tema: 'infraestrutura', sentimento: 'negativo' },
+  { mensagem: 'A segurança pública no nosso bairro piorou muito nos últimos meses.', categoria: 'critica', tema: 'seguranca', sentimento: 'negativo' },
+  { mensagem: 'Cadê as promessas de campanha? Já se passou um ano e nada mudou.', categoria: 'critica', tema: 'institucional', sentimento: 'negativo' },
+  { mensagem: 'O lixo não é coletado direito aqui, acumula e ninguém resolve.', categoria: 'critica', tema: 'infraestrutura', sentimento: 'negativo' },
+  // duvidas
+  { mensagem: 'Preciso de informação sobre o posto de saúde. Quando vai ter médico de família?', categoria: 'duvida', tema: 'saude', sentimento: 'neutro' },
+  { mensagem: 'Gostaria de saber quando vai ter audiência pública sobre o novo projeto.', categoria: 'duvida', tema: 'institucional', sentimento: 'neutro' },
+  { mensagem: 'Tem como agendar uma reunião para falar sobre o projeto do parque?', categoria: 'duvida', tema: 'institucional', sentimento: 'neutro' },
+  { mensagem: 'Como faço para me inscrever no programa de geração de renda?', categoria: 'duvida', tema: 'institucional', sentimento: 'neutro' },
+  { mensagem: 'Quais documentos preciso levar para o serviço de assistência social?', categoria: 'duvida', tema: 'institucional', sentimento: 'neutro' },
+  { mensagem: 'A vacinação da campanha será no posto de saúde ou no ginásio?', categoria: 'duvida', tema: 'saude', sentimento: 'neutro' },
+  // informacoes
+  { mensagem: 'Passando para avisar que tem um vazamento de água na esquina da Rua das Acácias.', categoria: 'informacao', tema: 'infraestrutura', sentimento: 'neutro' },
+  { mensagem: 'Vi um poste caído na Avenida Central, fica perto da padaria.', categoria: 'informacao', tema: 'infraestrutura', sentimento: 'neutro' },
+  { mensagem: 'Tem um terreno abandonado com muito mato que pode ser foco de dengue.', categoria: 'informacao', tema: 'saude', sentimento: 'neutro' },
+  { mensagem: 'Um grupo de pessoas estava vandalizando a praça ontem à noite.', categoria: 'informacao', tema: 'seguranca', sentimento: 'neutro' },
+  { mensagem: 'O semáforo da entrada do bairro está piscando e causando confusão no trânsito.', categoria: 'informacao', tema: 'infraestrutura', sentimento: 'neutro' },
+  // elogios
+  { mensagem: 'Parabéns pelo trabalho que vocês estão fazendo pelo nosso bairro!', categoria: 'elogio', tema: 'institucional', sentimento: 'positivo' },
+  { mensagem: 'O asfalto da avenida principal ficou ótimo, obrigado pela atenção!', categoria: 'elogio', tema: 'infraestrutura', sentimento: 'positivo' },
+  { mensagem: 'Queria agradecer pela reforma da praça, ficou muito bonita.', categoria: 'elogio', tema: 'infraestrutura', sentimento: 'positivo' },
+  { mensagem: 'O médico do posto de saúde atendeu muito bem minha mãe, parabéns!', categoria: 'elogio', tema: 'saude', sentimento: 'positivo' },
+  { mensagem: 'A iluminação nova no parque ficou linda e a segurança melhorou bastante!', categoria: 'elogio', tema: 'seguranca', sentimento: 'positivo' },
+  { mensagem: 'Obrigada pela rapidez no atendimento da minha solicitação!', categoria: 'elogio', tema: 'institucional', sentimento: 'positivo' },
 ];
 
-const waCategorias = ['demanda', 'elogio', 'duvida', 'critica', 'informacao'] as const;
-const waTemas = ['saude', 'educacao', 'infraestrutura', 'seguranca', 'institucional', 'outro'] as const;
-const waSentimentos = ['positivo', 'neutro', 'negativo'] as const;
 const waStatus = ['nova', 'lida', 'respondida'] as const;
 
 export const mockWhatsappMensagens = Array.from({ length: 60 }, (_, i) => {
-  const daysAgo = Math.floor(Math.random() * 56); // até 8 semanas
+  const daysAgo = Math.floor(Math.random() * 56);
   const date = subDays(today, daysAgo);
   const remetente = waRemetentes[i % waRemetentes.length];
-  const categoria = waCategorias[i % waCategorias.length];
-  const tema = waTemas[i % waTemas.length];
-  const sentimento =
-    categoria === 'elogio' ? 'positivo'
-    : categoria === 'critica' ? 'negativo'
-    : waSentimentos[i % 3];
+  const template = waTemplates[i % waTemplates.length];
   const status = waStatus[Math.floor(Math.random() * 3)];
   return {
     id: `wa-${i + 1}`,
     remetente_nome: remetente.nome,
     remetente_telefone: remetente.telefone,
-    mensagem: waMensagens[i % waMensagens.length],
-    categoria,
-    tema,
-    sentimento,
+    mensagem: template.mensagem,
+    categoria: template.categoria,
+    tema: template.tema,
+    sentimento: template.sentimento,
     status,
     data_recebimento: fmt(date),
     respondida: status === 'respondida',
