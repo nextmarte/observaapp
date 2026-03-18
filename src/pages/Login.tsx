@@ -86,8 +86,8 @@ const Login = () => {
         <CardHeader className="text-center space-y-4">
           <div className="mx-auto">
             <h1 className="text-3xl font-bold">
-              <span className="text-foreground">FP </span>
-              <span className="text-secondary">OBSERVA</span>
+              <span className="text-foreground">Observa</span>
+              <span className="text-secondary">App</span>
             </h1>
           </div>
           <CardTitle className="text-xl text-foreground">Entrar no sistema</CardTitle>

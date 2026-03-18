@@ -16,11 +16,8 @@ const PLATAFORMAS = [
 
 const TIPOS = [
   { value: 'all', label: 'Todos os tipos' },
-  { value: 'candidato', label: 'Candidato' },
-  { value: 'adversario', label: 'Adversário' },
-  { value: 'sindicato', label: 'Sindicato' },
-  { value: 'dce', label: 'DCE' },
-  { value: 'outro', label: 'Outro' },
+  { value: 'politico', label: 'Político' },
+  { value: 'oposicao', label: 'Oposição' },
 ];
 
 const ORDENAR_POR = [

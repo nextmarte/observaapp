@@ -51,8 +51,8 @@ const SidebarContent: React.FC<SidebarContentProps> = ({ onNavigate }) => {
       <div className="border-b border-sidebar-border/80 p-6">
         <div className="rounded-xl border border-sidebar-border/80 bg-white/5 px-4 py-3">
           <h1 className="text-xl font-bold tracking-tight">
-            <span className="text-sidebar-foreground">FP </span>
-            <span className="text-secondary">OBSERVA</span>
+            <span className="text-sidebar-foreground">Observa</span>
+            <span className="text-secondary">App</span>
           </h1>
           <p className="mt-1 text-xs text-muted-foreground">Análise estratégica de redes</p>
         </div>

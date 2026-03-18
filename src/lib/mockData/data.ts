@@ -405,6 +405,90 @@ export const mockRelatorios = [
   },
 ];
 
+// --------------- resumo semanal (fpobserva_vw_resumo_semanal) ---------------
+function generateResumoSemanal(
+  perfilId: string,
+  perfilNome: string,
+  perfilTipo: string,
+  corGrafico: string,
+  baseSeguidores: number,
+  semanas = 12
+) {
+  const rows = [];
+  let prevSeguidores = baseSeguidores;
+  for (let i = semanas; i >= 0; i--) {
+    const weekDate = subWeeks(today, i);
+    const semana_ano = `${weekDate.getFullYear()}-W${String(Math.ceil(weekDate.getDate() / 7)).padStart(2, '0')}`;
+    const seguidores = Math.max(
+      baseSeguidores + Math.round((Math.random() - 0.3) * 200 * (semanas - i + 1)),
+      baseSeguidores
+    );
+    const posts_semana = Math.floor(Math.random() * 7) + 1;
+    const engajamento_semana = Math.floor(Math.random() * 3000) + 200;
+    rows.push({
+      perfil_id: perfilId,
+      nome: perfilNome,
+      tipo: perfilTipo,
+      cor_grafico: corGrafico,
+      semana_ano,
+      data_coleta: fmtDate(weekDate),
+      seguidores,
+      seguidores_anterior: prevSeguidores,
+      variacao_seguidores: seguidores - prevSeguidores,
+      posts_semana,
+      engajamento_semana,
+    });
+    prevSeguidores = seguidores;
+  }
+  return rows;
+}
+
+export const mockResumoSemanal = [
+  ...generateResumoSemanal('p1', 'Carlos Mendes - Facebook',   'politico',  '#3b82f6', 48000),
+  ...generateResumoSemanal('p2', 'Carlos Mendes - Instagram',  'politico',  '#8b5cf6', 22000),
+  ...generateResumoSemanal('p3', 'Ana Ribeiro - Facebook',     'politico',  '#ef4444', 31000),
+  ...generateResumoSemanal('p4', 'Ana Ribeiro - Instagram',    'politico',  '#f97316', 15000),
+  ...generateResumoSemanal('p5', 'Lucas Ferreira - Facebook',  'oposicao',  '#22c55e', 27000),
+  ...generateResumoSemanal('p6', 'Lucas Ferreira - Instagram', 'oposicao',  '#14b8a6', 12000),
+];
+
+// --------------- engajamento histórico (fpobserva_vw_engajamento_historico) ---------------
+function generateEngajamentoHistorico(
+  perfilId: string,
+  perfilNome: string,
+  perfilTipo: string,
+  corGrafico: string,
+  baseAcumulado: number,
+  semanas = 12
+) {
+  const rows = [];
+  let acumulado = baseAcumulado;
+  for (let i = semanas; i >= 0; i--) {
+    const weekDate = subWeeks(today, i);
+    const semana_ano = `${weekDate.getFullYear()}-W${String(Math.ceil(weekDate.getDate() / 7)).padStart(2, '0')}`;
+    acumulado += Math.floor(Math.random() * 3000) + 200;
+    rows.push({
+      perfil_id: perfilId,
+      nome: perfilNome,
+      tipo: perfilTipo,
+      cor_grafico: corGrafico,
+      semana_ano,
+      data_coleta: fmtDate(weekDate),
+      engajamento_acumulado: acumulado,
+    });
+  }
+  return rows;
+}
+
+export const mockEngajamentoHistorico = [
+  ...generateEngajamentoHistorico('p1', 'Carlos Mendes - Facebook',   'politico',  '#3b82f6', 12000),
+  ...generateEngajamentoHistorico('p2', 'Carlos Mendes - Instagram',  'politico',  '#8b5cf6', 7000),
+  ...generateEngajamentoHistorico('p3', 'Ana Ribeiro - Facebook',     'politico',  '#ef4444', 9000),
+  ...generateEngajamentoHistorico('p4', 'Ana Ribeiro - Instagram',    'politico',  '#f97316', 5000),
+  ...generateEngajamentoHistorico('p5', 'Lucas Ferreira - Facebook',  'oposicao',  '#22c55e', 8000),
+  ...generateEngajamentoHistorico('p6', 'Lucas Ferreira - Instagram', 'oposicao',  '#14b8a6', 4000),
+];
+
 // --------------- usuarios ---------------
 export const mockUsuarios = [
   {

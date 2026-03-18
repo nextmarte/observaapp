@@ -32,6 +32,9 @@ import {
   mockAlertasConfig,
   mockRelatorios,
   mockUsuarios,
+  mockDashboardResumo,
+  mockResumoSemanal,
+  mockEngajamentoHistorico,
 } from '@/lib/mockData/data';
 
 // --------------- mock session / user ---------------
@@ -71,6 +74,10 @@ const TABLE_MAP: Record<string, any[]> = {
   fpobserva_alertas_config: mockAlertasConfig,
   fpobserva_relatorios: mockRelatorios,
   fpobserva_usuarios: mockUsuarios,
+  fpobserva_vw_dashboard_resumo: [mockDashboardResumo],
+  fpobserva_vw_resumo_semanal: mockResumoSemanal,
+  fpobserva_vw_engajamento_historico: mockEngajamentoHistorico,
+  fpobserva_vw_posts_ultima_semana: mockPosts,
 };
 
 // --------------- query builder ---------------
@@ -81,6 +88,8 @@ class QueryBuilder {
   private _filters: FilterFn[] = [];
   private _order: { column: string; ascending: boolean } | null = null;
   private _limitVal: number | null = null;
+  private _rangeFrom: number | null = null;
+  private _rangeTo: number | null = null;
   private _insertData: any[] | null = null;
   private _updateData: any | null = null;
   private _isDelete = false;
@@ -152,6 +161,12 @@ class QueryBuilder {
     return this;
   }
 
+  ilike(column: string, value: any) {
+    const pattern = String(value).toLowerCase();
+    this._filters.push((row) => String(row[column] ?? '').toLowerCase().includes(pattern));
+    return this;
+  }
+
   or(_filter: string) {
     // In mock mode, .or() is a no-op — all data is returned without filtering
     return this;
@@ -164,6 +179,12 @@ class QueryBuilder {
 
   limit(n: number) {
     this._limitVal = n;
+    return this;
+  }
+
+  range(from: number, to: number) {
+    this._rangeFrom = from;
+    this._rangeTo = to;
     return this;
   }
 
@@ -187,6 +208,10 @@ class QueryBuilder {
 
     if (this._limitVal !== null) {
       result = result.slice(0, this._limitVal);
+    }
+
+    if (this._rangeFrom !== null && this._rangeTo !== null) {
+      result = result.slice(this._rangeFrom, this._rangeTo + 1);
     }
 
     return result;
