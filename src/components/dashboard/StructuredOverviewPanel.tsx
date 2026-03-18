@@ -35,15 +35,15 @@ export const StructuredOverviewPanel: React.FC<StructuredOverviewPanelProps> = (
     [latestReference, weeklySummary]
   );
 
-  const candidateData = snapshot.find((item) => item.tipo === 'candidato');
-  const rivalsData = snapshot.filter((item) => item.tipo !== 'candidato');
+  const candidateData = snapshot.filter((item) => item.tipo === 'politico');
+  const rivalsData = snapshot.filter((item) => item.tipo === 'oposicao');
 
-  const candidateEngagement = candidateData?.engajamento_semana || 0;
+  const candidateEngagement = candidateData.reduce((acc, item) => acc + (item.engajamento_semana || 0), 0);
   const rivalsEngagement = rivalsData.reduce((acc, item) => acc + (item.engajamento_semana || 0), 0);
   const totalEngagement = candidateEngagement + rivalsEngagement;
   const candidateShare = totalEngagement > 0 ? (candidateEngagement / totalEngagement) * 100 : 0;
 
-  const candidatePosts = candidateData?.posts_semana || 0;
+  const candidatePosts = candidateData.reduce((acc, item) => acc + (item.posts_semana || 0), 0);
   const rivalsPosts = rivalsData.reduce((acc, item) => acc + (item.posts_semana || 0), 0);
 
   const fpEngagementPerPost = candidatePosts > 0 ? candidateEngagement / candidatePosts : 0;
