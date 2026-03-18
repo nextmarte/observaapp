@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="FP Observa">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b3f72"/>
+      <stop offset="100%" stop-color="#082a4f"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="url(#bg)"/>
+  <path d="M14 17h24v8H22v7h13v8H22v15h-8V17z" fill="#f5c13b"/>
+  <path d="M44 17h6c8 0 13 5 13 12s-5 12-13 12h-6V17zm6 16c3 0 5-1.7 5-4s-2-4-5-4h-2v8h2z" fill="#f5c13b"/>
+</svg>

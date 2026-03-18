@@ -1,0 +1,250 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* FP OBSERVA Design System */
+
+@layer base {
+  :root {
+    --background: 214 44% 8%;
+    --foreground: 210 40% 98%;
+
+    --card: 217 36% 13%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 217 36% 13%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 197 89% 42%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 41 94% 57%;
+    --secondary-foreground: 214 44% 8%;
+
+    --muted: 217 25% 22%;
+    --muted-foreground: 214 15% 72%;
+
+    --accent: 193 92% 35%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 216 26% 25%;
+    --input: 216 26% 24%;
+    --ring: 197 89% 42%;
+
+    --radius: 0.8rem;
+
+    --sidebar-background: 219 43% 10%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 197 89% 42%;
+    --sidebar-primary-foreground: 210 40% 98%;
+    --sidebar-accent: 218 28% 18%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 216 26% 24%;
+    --sidebar-ring: 197 89% 42%;
+
+    --uff-blue: 203 90% 35%;
+    --uff-gold: 41 94% 57%;
+    --uff-dark: 214 44% 8%;
+    --uff-card: 217 36% 13%;
+    --uff-border: 216 26% 25%;
+  }
+
+  .dark {
+    --background: 214 44% 8%;
+    --foreground: 210 40% 98%;
+
+    --card: 217 36% 13%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 217 36% 13%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 197 89% 42%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 41 94% 57%;
+    --secondary-foreground: 214 44% 8%;
+
+    --muted: 217 25% 22%;
+    --muted-foreground: 214 15% 72%;
+
+    --accent: 193 92% 35%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 216 26% 25%;
+    --input: 216 26% 24%;
+    --ring: 197 89% 42%;
+
+    --sidebar-background: 219 43% 10%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 197 89% 42%;
+    --sidebar-primary-foreground: 210 40% 98%;
+    --sidebar-accent: 218 28% 18%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 216 26% 24%;
+    --sidebar-ring: 197 89% 42%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+    @apply bg-background text-foreground antialiased;
+    background-image:
+      radial-gradient(circle at 12% 8%, hsl(var(--primary) / 0.16), transparent 32%),
+      radial-gradient(circle at 88% 2%, hsl(var(--secondary) / 0.16), transparent 28%),
+      linear-gradient(180deg, hsl(var(--background)), hsl(214 40% 7%));
+    background-attachment: fixed;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Sora', 'Manrope', system-ui, sans-serif;
+    letter-spacing: -0.01em;
+  }
+
+  ::selection {
+    background-color: hsl(var(--secondary) / 0.3);
+    color: hsl(var(--foreground));
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted));
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+/* Print Styles for Reports */
+@media print {
+  /* Hide all UI elements */
+  .print\\:hidden,
+  [data-sidebar],
+  aside,
+  header:not(.print-header),
+  nav,
+  .sidebar,
+  button,
+  [role="dialog"] > div:first-child, /* Dialog header */
+  [data-radix-scroll-area-viewport] > div > div:not(.print-content) {
+    display: none !important;
+  }
+
+  /* Reset page for clean print */
+  html, body {
+    background: white !important;
+    color: black !important;
+    font-size: 11pt !important;
+    line-height: 1.5 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Make dialog fullscreen and transparent */
+  [role="dialog"],
+  [data-state="open"] {
+    position: fixed !important;
+    inset: 0 !important;
+    max-width: 100% !important;
+    max-height: none !important;
+    width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: white !important;
+    overflow: visible !important;
+  }
+
+  /* Show print content properly */
+  .print-content {
+    display: block !important;
+    position: relative !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    background: white !important;
+    color: black !important;
+    padding: 15mm !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+  }
+
+  .print-content * {
+    color: black !important;
+  }
+
+  .print-content h1,
+  .print-content h2,
+  .print-content h3 {
+    color: #00285F !important;
+    page-break-after: avoid;
+  }
+
+  .print-content table {
+    border-collapse: collapse;
+    width: 100%;
+    page-break-inside: avoid;
+  }
+
+  .print-content th,
+  .print-content td {
+    border: 1px solid #ccc !important;
+    padding: 6px 8px;
+    text-align: left;
+    font-size: 10pt;
+  }
+
+  .print-content th {
+    background-color: #00285F !important;
+    color: white !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .print-content .bg-gray-50 {
+    background-color: #f9fafb !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .print-content section {
+    page-break-inside: avoid;
+    margin-bottom: 15px;
+  }
+
+  /* Page settings */
+  @page {
+    size: A4;
+    margin: 10mm;
+  }
+
+  /* Scroll area should be visible */
+  [data-radix-scroll-area-viewport] {
+    overflow: visible !important;
+    height: auto !important;
+  }
+}
