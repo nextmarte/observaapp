@@ -1,16 +1,17 @@
 import React from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import { 
-  LayoutDashboard, 
-  Users, 
-  FileText, 
-  GitCompare, 
+import {
+  LayoutDashboard,
+  Users,
+  FileText,
+  MessageCircle,
+  GitCompare,
   Brain,
-  FileBarChart, 
-  Bell, 
-  Settings, 
-  LogOut 
+  FileBarChart,
+  Bell,
+  Settings,
+  LogOut
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -20,6 +21,7 @@ const menuItems = [
   { path: '/dashboard', label: 'Visão Geral', icon: LayoutDashboard },
   { path: '/perfis', label: 'Perfis', icon: Users },
   { path: '/posts', label: 'Posts', icon: FileText },
+  { path: '/whatsapp', label: 'WhatsApp', icon: MessageCircle },
   { path: '/comparativo', label: 'Comparativo', icon: GitCompare },
   { path: '/inteligencia', label: 'Inteligência', icon: Brain },
   { path: '/relatorios', label: 'Relatórios', icon: FileBarChart },

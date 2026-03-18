@@ -489,6 +489,81 @@ export const mockEngajamentoHistorico = [
   ...generateEngajamentoHistorico('p6', 'Lucas Ferreira - Instagram', 'oposicao',  '#14b8a6', 4000),
 ];
 
+// --------------- whatsapp mensagens ---------------
+const waRemetentes = [
+  { nome: 'Maria S.', telefone: '+55 (86) 9****-1234' },
+  { nome: 'João P.', telefone: '+55 (86) 9****-5678' },
+  { nome: 'Ana C.', telefone: '+55 (89) 9****-2345' },
+  { nome: 'Carlos M.', telefone: '+55 (86) 9****-3456' },
+  { nome: 'Francisca L.', telefone: '+55 (89) 9****-4567' },
+  { nome: 'Raimundo F.', telefone: '+55 (86) 9****-5679' },
+  { nome: 'Antônia B.', telefone: '+55 (86) 9****-6780' },
+  { nome: 'José R.', telefone: '+55 (89) 9****-7891' },
+  { nome: 'Luciana O.', telefone: '+55 (86) 9****-8902' },
+  { nome: 'Pedro A.', telefone: '+55 (86) 9****-9013' },
+  { nome: 'Conceição D.', telefone: '+55 (89) 9****-0124' },
+  { nome: 'Manoel T.', telefone: '+55 (86) 9****-1235' },
+];
+
+const waMensagens = [
+  'Bom dia! Quando vão resolver o buraco na Rua das Flores? Já faz meses que tá assim.',
+  'Parabéns pelo trabalho que vocês estão fazendo pelo nosso bairro!',
+  'Preciso de informação sobre o posto de saúde. Quando vai ter médico de família?',
+  'A creche do bairro tá com problema sério, falta professor toda semana.',
+  'Gostaria de saber quando vai ter audiência pública sobre o novo projeto de lei.',
+  'O asfalto da avenida principal ficou ótimo, obrigado pela atenção!',
+  'Minha rua ainda não tem iluminação pública. Isso é um absurdo!',
+  'Queria agradecer pela reforma da praça, ficou muito bonita.',
+  'Tem como agendar uma reunião para falar sobre o projeto do parque?',
+  'A água tá faltando há três dias no conjunto habitacional. Urgente!',
+  'Precisamos de mais segurança no entorno da escola municipal.',
+  'O ônibus da linha 23 parou de passar. Isso tá afetando muito trabalhador.',
+  'Vocês sabem quando abre o cadastro para o programa de habitação?',
+  'O médico do posto de saúde atendeu muito bem minha mãe, parabéns!',
+  'Tem muita dengue no bairro e não vejo fumacê passando.',
+];
+
+const waCategorias = ['demanda', 'elogio', 'duvida', 'critica', 'informacao'] as const;
+const waTemas = ['saude', 'educacao', 'infraestrutura', 'seguranca', 'institucional', 'outro'] as const;
+const waSentimentos = ['positivo', 'neutro', 'negativo'] as const;
+const waStatus = ['nova', 'lida', 'respondida'] as const;
+
+export const mockWhatsappMensagens = Array.from({ length: 60 }, (_, i) => {
+  const daysAgo = Math.floor(Math.random() * 56); // até 8 semanas
+  const date = subDays(today, daysAgo);
+  const remetente = waRemetentes[i % waRemetentes.length];
+  const categoria = waCategorias[i % waCategorias.length];
+  const tema = waTemas[i % waTemas.length];
+  const sentimento =
+    categoria === 'elogio' ? 'positivo'
+    : categoria === 'critica' ? 'negativo'
+    : waSentimentos[i % 3];
+  const status = waStatus[Math.floor(Math.random() * 3)];
+  return {
+    id: `wa-${i + 1}`,
+    remetente_nome: remetente.nome,
+    remetente_telefone: remetente.telefone,
+    mensagem: waMensagens[i % waMensagens.length],
+    categoria,
+    tema,
+    sentimento,
+    status,
+    data_recebimento: fmt(date),
+    respondida: status === 'respondida',
+  };
+});
+
+export const mockWhatsappResumo = {
+  total_mensagens: 60,
+  novas: mockWhatsappMensagens.filter((m) => m.status === 'nova').length,
+  respondidas: mockWhatsappMensagens.filter((m) => m.respondida).length,
+  taxa_resposta_pct: Math.round(
+    (mockWhatsappMensagens.filter((m) => m.respondida).length / 60) * 100
+  ),
+  novos_remetentes: 8,
+  semana_referencia: fmtDate(today),
+};
+
 // --------------- usuarios ---------------
 export const mockUsuarios = [
   {

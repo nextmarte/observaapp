@@ -35,6 +35,8 @@ import {
   mockDashboardResumo,
   mockResumoSemanal,
   mockEngajamentoHistorico,
+  mockWhatsappMensagens,
+  mockWhatsappResumo,
 } from '@/lib/mockData/data';
 
 // --------------- mock session / user ---------------
@@ -78,6 +80,8 @@ const TABLE_MAP: Record<string, any[]> = {
   fpobserva_vw_resumo_semanal: mockResumoSemanal,
   fpobserva_vw_engajamento_historico: mockEngajamentoHistorico,
   fpobserva_vw_posts_ultima_semana: mockPosts,
+  fpobserva_whatsapp_mensagens: mockWhatsappMensagens,
+  fpobserva_vw_whatsapp_resumo: [mockWhatsappResumo],
 };
 
 // --------------- query builder ---------------

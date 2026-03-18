@@ -16,6 +16,7 @@ import Comparativo from "./pages/Comparativo";
 import Inteligencia from "./pages/Inteligencia";
 import Relatorios from "./pages/Relatorios";
 import Alertas from "./pages/Alertas";
+import WhatsApp from "./pages/WhatsApp";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
@@ -60,6 +61,14 @@ const App = () => {
                 element={
                   <AuthGuard>
                     <Posts />
+                  </AuthGuard>
+                }
+              />
+              <Route
+                path="/whatsapp"
+                element={
+                  <AuthGuard>
+                    <WhatsApp />
                   </AuthGuard>
                 }
               />
