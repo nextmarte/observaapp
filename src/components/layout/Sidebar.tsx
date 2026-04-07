@@ -21,11 +21,11 @@ const menuItems = [
   { path: '/dashboard', label: 'Visão Geral', icon: LayoutDashboard },
   { path: '/perfis', label: 'Perfis', icon: Users },
   { path: '/posts', label: 'Posts', icon: FileText },
-  { path: '/whatsapp', label: 'WhatsApp', icon: MessageCircle },
   { path: '/comparativo', label: 'Comparativo', icon: GitCompare },
   { path: '/inteligencia', label: 'Inteligência', icon: Brain },
   { path: '/relatorios', label: 'Relatórios', icon: FileBarChart },
   { path: '/alertas', label: 'Alertas', icon: Bell },
+  { path: '/whatsapp', label: 'WhatsApp', icon: MessageCircle },
 ];
 
 const adminItems = [
